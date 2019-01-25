@@ -1,0 +1,157 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont;
+    font-size: 18px;
+    line-height: 1.5em;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width:100%;
+}
+
+.container {
+    margin: auto;
+}
+
+/* COMMON CLASSES*/
+.primary-text{
+    color: #9ACD32;
+}
+.primary-background{
+    color:#9ACD32;
+}
+
+/*HEADER*/
+#main-header{
+    border-bottom: 1px solid #9ACD32;
+}
+
+/*NAVBAR*/
+#navbar {
+    text-transform: uppercase;
+}
+#navbar li{
+    display: inline;
+    padding-right: 20px;
+    list-style: none;
+}
+#navbar a{
+    text-decoration: none;
+    color: #888;
+}
+#navbar li.current a, #navbar a:hover{
+    color:#9ACD32;
+    border-bottom: 3px solid #9ACD32;
+    padding-bottom: 3px;
+}
+/* SHOWCASE */
+#showcase{
+    background: url(../images/agreement-black-business-943630.jpg) no-repeat center;
+    border-bottom: 1px solid #9ACD32;
+    margin-bottom: 30px;
+}
+#showcase .row{
+    height: 600px;
+}
+#showcase h1{
+    font-size: 50px;
+    margin: 0;
+    padding-bottom: 20px;
+}
+#showcase p{
+    color:#ccc;
+    margin:0;
+}
+#showcase .showcase-content{
+    background:#333;
+    color:#fff;
+    border-radius: 90px;
+    padding: 40px;
+    opacity: 0.9;
+}
+
+/*CATEGORIES*/
+#categories h2{
+    font-size: 35px;
+    margin: 0;
+    padding-bottom: 10px;
+}
+#categories p{
+    font-size: #888;
+    margin: 0;
+    padding-bottom: 10px;
+}
+#categories p{
+    color:#888;
+    margin: 0;
+    margin-bottom: 40px;
+}
+#categories .fa{
+    font-size: 60px;
+    color: #9ACD32;
+}
+
+/*INFO*/
+#info{
+    background: url(../images/happy\ black\ people.jpg)no-repeat;
+    color: rgb(190, 114, 28);
+}
+#info h2{
+    font-size: 35px;
+    margin: 0;
+    padding-bottom: 10px;
+}
+#info ul{
+    list-style: none;
+    padding: 0;
+}
+#info li{ 
+    line-height: 2em;
+    font-size: 20px;
+}
+
+/*COMPANY*/
+#company{
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+#company h4{
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+#company ul{
+    padding: none;
+    list-style: none;
+    line-height: 2em;
+}
+
+#company input[type="text"]{
+    padding:7px;
+}
+
+#company button{
+    background:#222;
+    color:#fff;
+    padding:10px;
+    border:0;
+}
+
+/* FOOTER */
+#main-footer{
+    background: #9ACD32;
+    color: #fff;
+}
+
+/* MEDIA QUERIES */
+@media(max-width:800px){
+    #showcase h1 {
+        font-size: 30px;
+    }
+ }
+ @media(max-width:500px){
+    #showcase .showcase-content{
+        padding:40px 10px;
+    }
+ }
