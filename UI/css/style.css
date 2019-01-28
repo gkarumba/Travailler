@@ -240,7 +240,7 @@ img {
     background:#333;
     color:#fff;
     border-radius: 90px;
-    padding: 20px;
+    padding: 10px;
     opacity: 0.9;
 }
 #profile .fa{
@@ -266,6 +266,44 @@ img {
     padding: 0;
 }
 
+/*ADMINACTIONS*/
+#adminactions{
+    background: url(../images/agreement-black-business-943630.jpg) no-repeat center;
+    border-bottom: 1px solid #9ACD32;
+    margin-bottom: 0px;
+    margin-top: 0;
+}
+#adminactions .row{
+    height: 400px;
+}
+#adminactions h2{
+    font-size: 50px;
+    margin: 0;
+    padding-bottom: 20px;
+}
+#adminactions input[type="text"]{
+    padding:7px;
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+}
+
+#adminactions button{
+    background:#9ACD32;
+    color:#fff;
+    width:80%;
+    padding:10px;
+    margin:10px;
+    border:0;
+}
+
+#adminactions .adminactions-content{
+    background:#333;
+    color:#fff;
+    border-radius: 90px;
+    padding: 20px;
+    opacity: 0.9; 
+}
 
 /* MEDIA QUERIES */
 @media(max-width:800px){
