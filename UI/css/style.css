@@ -210,6 +210,63 @@ img {
     opacity: 0.9; 
 }
 
+/* PROFILE */
+#profile{
+    background: url(../images/agreement-black-business-943630.jpg) no-repeat center;
+    border-bottom: 1px solid #9ACD32;
+    margin-bottom: 0px;
+}
+#profile .row{
+    height: 600px;
+}
+#profile h1{
+    font-size: 50px;
+    margin: 0;
+    padding-bottom: 10px;
+}
+#profile p{
+    color:#ccc;
+    margin:0;
+}
+#profile button{
+    background:#9ACD32;
+    color:#fff;
+    width:60%;
+    padding:5px;
+    margin:10px;
+    border:0;
+}
+#profile .profile-content{
+    background:#333;
+    color:#fff;
+    border-radius: 90px;
+    padding: 20px;
+    opacity: 0.9;
+}
+#profile .fa{
+    font-size: 30px;
+    color: #9ACD32;
+    padding-right: 30px;
+}
+/*APPLICATIONS*/
+#application{
+    /* background: url(../images/happy\ black\ people.jpg)no-repeat; */
+    color: rgb(190, 114, 28);
+    width:100%;
+}
+#application h2{
+    font-size: 35px;
+    margin: 0;
+    padding:10px;
+    padding-bottom: 10px;
+    color:#9ACD32;
+}
+#application p{
+    list-style: none;
+    padding: 0;
+}
+
+
 /* MEDIA QUERIES */
 @media(max-width:800px){
     #showcase h1 {
