@@ -91,3 +91,23 @@ def validate_occupation(occupation):
         return True
     return True
 
+def validate_title(title):
+    if not re.match(r"^[A-Za-z\.\+_-]*$", title):
+        return False
+    return True
+
+def validate_responsibility(responsibility):
+    if not re.match(r"^[A-Za-z\.\+_-]*$",responsibility):
+        return False
+    return True
+
+def validate_company(company):
+    if not re.match(r"^[A-Za-z0-9\.\+_-]*$", company):
+        return False
+    return True
+
+def validate_salary(salary):
+    regnumber = re.compile(r'\d+')
+    if not regnumber.match(salary):
+        return False
+    return True
