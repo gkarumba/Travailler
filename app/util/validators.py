@@ -41,11 +41,27 @@ def validate_education(education):
     """
     Function to validate the user's education
     """
-    qualification = 'Diploma,Certificate,Degree,Masters,PhD'
-    if education in qualification:
+    # qualification = 'Diploma Certificate Degree '
+    qualification = r'\b' + 'Diploma' + r'\b' 
+    qualification2 = r'\b' + 'Certificate' + r'\b' 
+    qualification3 = r'\b' + 'Degree' + r'\b'
+    if not re.findall(qualification,education):
+        if not re.findall(qualification2,education):
+            if not re.findall(qualification3,education):
+                return False
+            return True
         return True
-    return False
+    return True
 
+def check_password(password):
+    """
+    Method for checking the user's password
+    """
+    if re.match(r"[A-Za-z0-9@#$%^&+=]{8,}", password) != None:
+        return True
+    else:
+        return False
+ 
 def validate_location(location):
     """
     Function to validate a user's location
@@ -66,8 +82,12 @@ def validate_occupation(occupation):
     """
     Function to validate the user's occupation
     """
-    works = ['Employed','Unemployed','Retired']
-    for occ in works:
-        if occ == occupation:
-            return True
-        return False
+    # works = ['Employed','Unemployed','Retired']
+    works = r'\b' + 'Employed' + r'\b' 
+    works2 = r'\b' + 'Unemployed' + r'\b' 
+    if not re.findall(works,occupation):
+        if not re.findall(works2,occupation):
+            return False
+        return True
+    return True
+
