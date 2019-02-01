@@ -146,7 +146,7 @@ img {
     background: #9ACD32;
     color: #fff;
 }
-/* SHOWCASE */
+/* OPOORTUNITIES */
 #opportunities{
     background: rgb(190, 114, 28);
     border-bottom: 1px solid #9ACD32;
@@ -170,6 +170,44 @@ img {
     border-radius: 90px;
     padding: 30px;
     opacity: 1.0;
+}
+
+/* REGISTER */
+#register{
+    background: url(../images/agreement-black-business-943630.jpg) no-repeat center;
+    border-bottom: 1px solid #9ACD32;
+    margin-bottom: 0px;
+}
+#register .row{
+    height: 600px;
+}
+#register h2{
+    font-size: 50px;
+    margin: 0;
+    padding-bottom: 20px;
+}
+#register input[type="text"]{
+    padding:7px;
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+}
+
+#register button{
+    background:#9ACD32;
+    color:#fff;
+    width:80%;
+    padding:10px;
+    margin:10px;
+    border:0;
+}
+
+#register .register-content{
+    background:#333;
+    color:#fff;
+    border-radius: 90px;
+    padding: 20px;
+    opacity: 0.9; 
 }
 
 /* MEDIA QUERIES */
