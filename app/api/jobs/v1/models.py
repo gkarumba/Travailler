@@ -3,37 +3,40 @@ from datetime import datetime,timedelta
 
 jobs = []
 
-class JobsModel:
+class JobsModel():
     """
     Class with methods to add a job
     """
-    def __init__(self,title,category,responsibility,\
-                 company,location,salary):
-        self.title = title
-        self.category = category
-        self.responsibility = responsibility
-        self.company = company
-        self.location = location
-        self.salary = salary
-        self.jobId = len(jobs)+1
-        self.dateposted = datetime.now()
-        self.deadline =  datetime.now() + timedelta(days=21)
+    def __init__(self):
+        """
+            Constructor method for the class BooksModel
+        """
+        self.db = jobs
 
-    def serialize(self):
+    def add_job(self,title,company,category,responsibility,\
+                 salary,location):
         """
-        Method to take json data and return a python dictionary
+            Method for serializing the data of a book
         """
-        return {
-        "title":self.title,
-        "category":self.category,
-        "responsibility":self.responsibility,
-        "company":self.company,
-        "location":self.location,
-        "salary":self.salary,
-        "jobId":self.jobId,
-        "dateposted":self.dateposted,
-        "deadline":self.deadline
-        }
+        payload = {
+            'location' : location,
+            'title' : title,
+            'company' : company,
+            'responsibility' : responsibility,
+            'category' : category,
+            'salary': salary,
+            'jobid' : len(jobs) + 1,
+            'added_on'  : datetime.now(),
+            'deadline_on' : datetime.now() + timedelta(days=14)
+        } 
+        check_title = self.check_job_title(title)
+        if check_title == True:
+            return 'job already exists'
+        else:
+            self.db.append(payload)
+            for pos in self.db:
+                return pos
+        
     def check_job_title(self,titled):
         """
         Method for checking if job title already exists
@@ -42,3 +45,9 @@ class JobsModel:
             if job.title == titled:
                 return True
             return False 
+    
+    def get_all(self):
+        """
+            Method for retrieving all the books
+        """
+        return jobs
