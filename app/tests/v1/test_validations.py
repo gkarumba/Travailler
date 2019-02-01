@@ -77,4 +77,5 @@ class TestEndpoints(BaseTest):
         self.assertEqual(response.status_code, 400)
         self.assertIn(result['message'],'Invalid occupation')
 
+
     
