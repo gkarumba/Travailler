@@ -25,7 +25,7 @@ def validate_username(username):
     """
     Function to validate a username
     """
-    if not re.match(r"^[A-Za-z0-9\.\+_-]*$", username):
+    if not re.match(r"^[A-Za-z\.\+_-]*$", username):
         return False
     return True
 

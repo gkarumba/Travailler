@@ -9,7 +9,7 @@ from app.util.validators import validate_age,validate_education,\
                                 validate_NationalID,validate_occupation,\
                                 validate_username,check_space,check_password
 
-api = Namespace('Users',description='user related operations')
+api = Namespace('Register',description='user related operations')
 
 user = api.model('Register',{
     'username':fields.String(required=True,description='Users username'),
@@ -22,8 +22,7 @@ user = api.model('Register',{
     'NationalID':fields.Integer(required=True,description='Users NationalID number')
 })
 
-api = Namespace('LogIn',description='user related operations')
-
+# api = Namespace('LogIn',description='user related operations')
 login = api.model('LogIn',{
     'username':fields.String(required=True,description='Users username'),
     'password':fields.String(required=True,description='Users password')
@@ -70,7 +69,7 @@ class Registration(Resource):
         if not validate_education(args['education']):
             return abort(make_response(jsonify({'message':'Invalid education'}),400))
         if not validate_NationalID(args['NationalID']):
-            return abort(make_response(jsonify({'message':'Invalid nationaId'}),400))
+            return abort(make_response(jsonify({'message':'Invalid NationalID'}),400))
         if not validate_location(args['location']):
             return abort(make_response(jsonify({'message':'Invalid location'}),400))
         
