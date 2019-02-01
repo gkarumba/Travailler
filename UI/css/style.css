@@ -266,6 +266,7 @@ img {
     padding: 0;
 }
 
+
 /*ADMINACTIONS*/
 #adminactions{
     background: url(../images/agreement-black-business-943630.jpg) no-repeat center;
@@ -305,6 +306,45 @@ img {
     opacity: 0.9; 
 }
 
+/*INTERNSHIPS*/
+#internships{
+    background: url(../images/agreement-black-business-943630.jpg) no-repeat center;
+    border-bottom: 1px solid #9ACD32;
+    margin-bottom: 0px;
+    margin-top: 0;
+}
+#internships .row{
+    height: 225px;
+}
+#internships h2{
+    font-size: 50px;
+    margin: 0;
+    padding-bottom: 20px;
+}
+#internships input[type="text"]{
+    padding:7px;
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+}
+
+#internships button{
+    background:#9ACD32;
+    color:#fff;
+    width:80%;
+    padding:10px;
+    margin:10px;
+    border:0;
+}
+
+#internships .internships-content{
+    background:#333;
+    color:#fff;
+    border-radius: 90px;
+    padding: 20px;
+    opacity: 0.9; 
+}
+
 /* MEDIA QUERIES */
 @media(max-width:800px){
     #showcase h1 {
@@ -319,6 +359,11 @@ img {
 
  @media(max-width:500px){
     #opportunities .row{
-        height: 15500px;
+        font-size:15px;
+    }
+ }
+ @media(max-width:500px){
+    #internships .row{
+        font-size:15px;
     }
  }
