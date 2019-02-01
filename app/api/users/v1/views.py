@@ -63,6 +63,7 @@ class Registration(Resource):
             return abort(make_response(jsonify({'message':'Invalid location'}),400))
         
         user_exists = UserModels.check_id_number(self,args['NationalID'])
+        # print(user_exists)
         if not user_exists:
             new_user = UserModels(username=args['username'],email=args['email'],age=args['age'],
                                   occupation=args['occupation'],education=args['education'],
