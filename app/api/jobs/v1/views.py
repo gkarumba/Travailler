@@ -76,5 +76,19 @@ class AddJob(Resource):
                                                                     'job':get_jobs}]}), 200)
         return abort(make_response(jsonify({'message':'No job found'}),400))
 
+class GetJob(Resource):
+    """
+    Class with methods to get a book
+    """
+    def get(self,id):
+        """
+        method to get a book
+        """
+        get_job = JobsModel.get_one(self,id)
+        if get_job:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'jobs available',
+                                                                    'job':get_job}]}), 200)
+        return abort(make_response(jsonify({'message':'No job found'}),400))
 
 api.add_resource(AddJob,'/jobs')
+api.add_resource(GetJob,'/jobs/<int:id>')

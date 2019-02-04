@@ -42,12 +42,38 @@ class JobsModel():
         Method for checking if job title already exists
         """
         for job in jobs:
-            if job.title == titled:
+            if job['title'] == titled:
                 return True
             return False 
     
     def get_all(self):
         """
-            Method for retrieving all the books
+        Method for retrieving all the books
         """
         return jobs
+    def get_one(self,cat_id):
+        """
+        Method to retrieve one job
+        """
+        categories = {
+            2 : "Engineer" ,
+            1 : "Medicine" ,
+            3 : "Theology"  ,
+            4 : "Business"  ,
+            5 : "Hospitality"  ,
+            6 : "Computer science" 
+        }
+        for key,value in categories.items():
+            # print(key,value)
+            if key == cat_id:
+                print(key,value)
+                for job in jobs:
+                    print(job)
+                    print(job['category'])
+                    if job['category'] == value:
+                        return job
+                    # return False
+            #     return False
+            # return False
+
+        
