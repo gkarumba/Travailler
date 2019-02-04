@@ -1,11 +1,13 @@
 from flask_restplus import Resource,fields,reqparse\
                            ,Namespace
-
+import json
 from flask import abort,session,make_response,jsonify
 from app.api.jobs.v1.models import JobsModel,jobs
 from app.util.validators import validate_company,validate_location,\
                                 validate_responsibility,validate_salary,\
                                 validate_title,check_space
+
+db = JobsModel()
 
 api = Namespace('Jobs',description='Job related operations')
 
@@ -15,7 +17,7 @@ job = api.model('Jobs',{
     'responsibility':fields.String(required=True,description='jobs responsibility'),
     'company':fields.Integer(required=True,description='jobs company'),
     'location':fields.String(required=True,description='jobs location'),
-    'salary':fields.String(required=True,description='jobs occupation')
+    'salary':fields.String(required=True,description='jobs salary')
 })
 
 class AddJob(Resource):
@@ -55,16 +57,24 @@ class AddJob(Resource):
         if not validate_salary(args['salary']):
             return abort(make_response(jsonify({'message':'Invalid salary'}),400))
 
-        job_exists = JobsModel.check_job_title(self,args['title'])
-        # print(job_exists)
-        if not job_exists:
-            new_job = JobsModel(title=args['title'],category=args['category'],
-                                responsibility=args['responsibility'],
-                                company=args['company'],salary=args['salary'],
-                                location=args['location'])
-            add_book = jobs.append(new_job)
-            return  make_response(jsonify({"status": 201, "data": [{'message': 'job succesfully added',
-                                                                    'job':new_job.serialize()}]}), 201)
-        return abort(make_response(jsonify({'message':'job Already exists'}),400))
+        new_job = db.add_job(title=args['title'],company=args['company'],category=args['category'],\
+                             responsibility=args['responsibility'],salary=args['salary'],\
+                             location=args['location'])
+        if new_job == 'job already exists':
+            return make_response(jsonify({'message':'job already exists',}),400)
+        return  make_response(jsonify({"status": 201, "data": [{'message': 'job succesfully added',
+                                                                    'job':new_job['jobid']}]}), 201)
+
+    def get(self):
+        """
+        Method to retrieve all jobs
+        """
+        get_jobs = JobsModel.get_all(self)
+        if get_jobs:
+            # myJson = json.dumps([x.__dict__ for x in get_jobs])
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'jobs available',
+                                                                    'job':get_jobs}]}), 200)
+        return abort(make_response(jsonify({'message':'No job found'}),400))
+
 
 api.add_resource(AddJob,'/jobs')
