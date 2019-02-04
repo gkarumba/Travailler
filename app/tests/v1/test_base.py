@@ -109,4 +109,21 @@ class BaseTest(unittest.TestCase):
             "username": "string",
             "password": "string98"
         }
-    
+
+        self.post_data = {
+            "title":"JrElectEng",
+            "category":"Engineer",
+            "responsibility":"sweep",
+            "company":"Dasani",
+            "location":"sembakasi",
+            "salary":"10000"
+        }
+
+        self.post_data2 = {
+            "title":"Medofficer",
+            "category":"Medicine",
+            "responsibility":"sweep",
+            "company":"Dasani",
+            "location":"sembakasi",
+            "salary":"10000"
+        }
