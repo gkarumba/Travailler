@@ -127,3 +127,12 @@ class BaseTest(unittest.TestCase):
             "location":"sembakasi",
             "salary":"10000"
         }
+        
+        self.edit_data = {
+            "new_title":"JrMedOfficer",
+            "new_category":"Medicine",
+            "new_responsibility":"sweep",
+            "new_company":"Dasani",
+            "new_location":"sembakasi",
+            "new_salary":"102000"
+        }

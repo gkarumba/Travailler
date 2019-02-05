@@ -101,4 +101,16 @@ class JobsModel():
             jobs[0]['location'] = location
             return jobs[0]
 
-        
+    def delete_job(self,id):
+        """
+        Method to allow admin to delete
+        """
+        if len(jobs) == 0:
+            return jobs
+        elif len(jobs) > 0:
+            for job in jobs:
+                if job['jobid'] == id:
+                    jobs.remove(job)
+                    # print(jobs)
+                    return True
+                return False

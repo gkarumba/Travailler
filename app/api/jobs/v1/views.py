@@ -147,8 +147,23 @@ class EditJob(Resource):
             return  make_response(jsonify({"status": 200, "data": [{'message': 'job edited succesfully',
                                                                     'job':response}]}), 200)
        
-            
+class DeleteJob(Resource):
+    """
+    Class with method to remove a job
+    """        
+    def delete(self,id):
+        """
+        Method to remove a job
+        """
+        check_job = JobsModel.get_job_by_id(self,id)
+        if not check_job:
+            return abort(make_response(jsonify({'message':'No job found'}),400))
 
+        response = JobsModel.delete_job(self,id)
+        if response:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'job deleted succesfully'
+                                                                    }]}), 200)
 api.add_resource(AddJob,'/jobs')
 api.add_resource(GetJob,'/jobs/<int:id>')
 api.add_resource(EditJob,'/jobs/edit/<int:id>')
+api.add_resource(DeleteJob,'/jobs/delete/<int:id>')
