@@ -20,6 +20,15 @@ job = api.model('Jobs',{
     'salary':fields.String(required=True,description='jobs salary')
 })
 
+job_edit = api.model('Edits',{
+    'new_title':fields.String(required=True,description='jobs title'),
+    'new_category':fields.String(required=True,description='jobs category'),
+    'new_responsibility':fields.String(required=True,description='jobs responsibility'),
+    'new_company':fields.Integer(required=True,description='jobs company'),
+    'new_location':fields.String(required=True,description='jobs location'),
+    'new_salary':fields.String(required=True,description='jobs salary')
+})
+
 class AddJob(Resource):
     """
     Class with methods to add/retrieve books
@@ -90,5 +99,56 @@ class GetJob(Resource):
                                                                     'job':get_job}]}), 200)
         return abort(make_response(jsonify({'message':'No job found'}),400))
 
+class EditJob(Resource):
+    """
+    Class with the method to edit a job
+    """
+    @api.expect(job_edit)
+    def put(self,id):
+        """
+        Method to edit a job
+        """
+        parser = reqparse.RequestParser()
+        parser.add_argument('new_title',type=str,\
+                            required=True,help='new_title field cannot be empty')
+        parser.add_argument('new_category',type=str,\
+                            required=True,help='new_category field cannot be empty')
+        parser.add_argument('new_responsibility',type=str,\
+                            required=True,help='new_responsibility field cannot be empty')
+        parser.add_argument('new_company',type=str,\
+                            required=True,help='new_company field cannot be empty')
+        parser.add_argument('new_location',type=str,\
+                            required=True,help='new_location field cannot be empty')
+        parser.add_argument('new_salary',type=str,\
+                            required=True,help='new_salary field cannot be empty')
+        args = parser.parse_args()
+        
+        if not validate_title(args['new_title']) or not check_space(args['new_title']):
+            return abort(make_response(jsonify({'message':'Invalid new_title'}),400))
+        # if not validate_category(args['new_category']) or not check_space(args['new_category']):
+        #     return abort(make_response(jsonify({'message':'Invalid new_category'}),400))
+        if not validate_responsibility(args['new_responsibility']) or not check_space(args['new_responsibility']):
+            return abort(make_response(jsonify({'message':'Invalid new_responsibility'}),400))
+        if not validate_company(args['new_company']) or not check_space(args['new_company']):
+            return abort(make_response(jsonify({'message':'Invalid new_company'}),400))
+        if not validate_location(args['new_location']) or not check_space(args['new_location']):
+            return abort(make_response(jsonify({'message':'Invalid new_location'}),400))
+        if not validate_salary(args['new_salary']):
+            return abort(make_response(jsonify({'message':'Invalid new_salary'}),400))
+        
+        check_job = JobsModel.get_job_by_id(self,id)
+        if not check_job:
+            return abort(make_response(jsonify({'message':'No job found'}),400))
+
+        response = JobsModel.change_job_details(self,title=args['new_title'],company=args['new_company'],category=args['new_category'],\
+                             responsibility=args['new_responsibility'],salary=args['new_salary'],\
+                             location=args['new_location'])
+        if response:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'job edited succesfully',
+                                                                    'job':response}]}), 200)
+       
+            
+
 api.add_resource(AddJob,'/jobs')
 api.add_resource(GetJob,'/jobs/<int:id>')
+api.add_resource(EditJob,'/jobs/edit/<int:id>')
