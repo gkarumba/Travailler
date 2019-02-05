@@ -51,6 +51,7 @@ class JobsModel():
         Method for retrieving all the books
         """
         return jobs
+
     def get_one(self,cat_id):
         """
         Method to retrieve one job
@@ -75,5 +76,29 @@ class JobsModel():
                     # return False
             #     return False
             # return False
+    
+    def get_job_by_id(self,id):
+        """
+        Method for checking if a job exists
+        """
+        for job in jobs:
+            if job['jobid'] == id:
+                return True
+            return False
+
+    def change_job_details(self,title,company,category,\
+                            responsibility,salary,location):
+        """
+        Method to allow change of job details
+        """
+        # job = self.get_one(id)
+        if len(jobs) > 0:
+            jobs[0]['title'] = title
+            jobs[0]['company'] = company
+            jobs[0]['category'] = category
+            jobs[0]['responsibility'] = responsibility
+            jobs[0]['salary'] = salary
+            jobs[0]['location'] = location
+            return jobs[0]
 
         
