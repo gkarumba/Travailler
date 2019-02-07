@@ -1,5 +1,6 @@
 from flask import Flask,Blueprint,jsonify
 from app.api.v1 import version1
+from app.api.v2 import version2
 from instance.config import config_by_name
 from app.database.database import Database 
 
@@ -11,6 +12,7 @@ def create_app(config_name='dev'):
     app.config.from_pyfile('config.py')
     db.create_tables()
     app.register_blueprint(version1)
+    app.register_blueprint(version2)
     
     # @app.errorhandler(404)
     # def page_not_found(e):

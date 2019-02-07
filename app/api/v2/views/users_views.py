@@ -3,15 +3,15 @@ from flask_restplus import Resource,fields,reqparse\
 
 from flask import abort,session,make_response,jsonify
 
-from app.api.users.v2.models import UserModel
+from app.api.v2.models.users_models import UserModel
 from app.util.validators import validate_age,validate_education,\
                                 validate_email,validate_location,\
                                 validate_NationalID,validate_occupation,\
                                 validate_username,check_space,check_password
-from app.util.dto import UserDto
+from app.util.dto import AuthDto
 
-api = UserDto.api
-_user = UserDto.userv2
+api = AuthDto.api
+_user = AuthDto.user_details
 
 # db = UserModel()
 class UserRegistration(Resource):
@@ -61,12 +61,13 @@ class UserRegistration(Resource):
             return abort(make_response(jsonify({'message':'Invalid location'}),400))
         
         user_exists = UserModel.check_user_exists(self,args['nationalID'])
-        if not user_exists:
+        print(user_exists)
+        if user_exists:
             new_user = UserModel.add_user(self,username=args['username'],email=args['email'],age=args['age'],
                                   occupation=args['occupation'],education=args['education'],
                                   nationalID=args['nationalID'],location=args['location'],password=args['password'])
             return  make_response(jsonify({"status": 201, "data": [{'message': 'user succesfully created',
-                                                                    'user':new_user.serialize()}]}), 201)
+                                                                    'user':new_user}]}), 201)
         return abort(make_response(jsonify({'message':'User Already exists'}),400))
         
 api.add_resource(UserRegistration,'/user/signup')

@@ -67,6 +67,11 @@ class Database():
         """Method to retrieve jobs by category"""
         self.cur.execute(query_data)
         return self.cur.fetchone()
+    
+    def get_one_user(self,query_data):
+        """Method to retrieve user"""
+        self.cur.execute(query_data)
+        return self.cur.fetchone()
 
     def edit_job(self,query_data):
         """Method to edit a job data"""

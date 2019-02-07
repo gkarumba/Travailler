@@ -17,13 +17,13 @@ class UserModel():
         tuple_data = (email,hash_password,username,occupation,age,\
                       location,education,nationalID)
         db.add_user(query,tuple_data)
-        query2 = """SELECT id FROM user_entity WHERE id = (select max(id) from user_entity);"""
-        result = db.get_one(query2)
+        query2 = """SELECT user_id FROM user_entity WHERE user_id = (select max(user_id) from user_entity);"""
+        result = db.get_one_user(query2)
         return result
 
     def check_user_exists(self,nationalID):
         """Method to check if user exists"""
-        query = f"""SELECT id FROM user_entity WHERE id ={nationalID};"""
-        if not query:
-            return True
-        return False
+        query = f"""SELECT nationalID FROM user_entity WHERE nationalID ={nationalID};"""
+        if query:
+            return False
+        return True
