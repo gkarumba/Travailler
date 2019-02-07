@@ -35,4 +35,7 @@ class AuthDto():
         "nationalID":fields.String(required=True,description="Users nationalID number")
     })
 
-    
+    login_details = api.model('LogIn',{
+    'nationalID':fields.String(required=True,description='Users nationalID'),
+    'password':fields.String(required=True,description='Users password')
+    })
