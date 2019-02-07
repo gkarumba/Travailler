@@ -7,14 +7,15 @@ class Config:
     """
     Parent Configuration class
     """
-    DEBUG = False
+    DEBUG = True
     CSRF_ENABLED = True
 
 class DevelopmentConfig(Config):
     """
     Development stage configurations
     """
-    DEBUG = True
+    DEBUG = False
+    DB_URL = os.getenv('DATABASE_URL')
 
 class TestingConfig(Config):
     """
@@ -22,6 +23,7 @@ class TestingConfig(Config):
     """
     DEBUG = True
     TESTING =  True
+    DB_URL = os.getenv('TEST_DB_URL')
     
 class ProductionConfig(Config):
     """
@@ -31,6 +33,6 @@ class ProductionConfig(Config):
 
 config_by_name = dict(
     dev=DevelopmentConfig,
-    test=TestingConfig,
-    prod=ProductionConfig
+    testing=TestingConfig,
+    production=ProductionConfig
 )

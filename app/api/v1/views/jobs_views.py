@@ -2,7 +2,7 @@ from flask_restplus import Resource,fields,reqparse\
                            ,Namespace
 import json
 from flask import abort,session,make_response,jsonify
-from app.api.jobs.v1.models import JobsModel,jobs
+from app.api.v1.models.jobs_models import JobsModel,jobs
 from app.util.validators import validate_company,validate_location,\
                                 validate_responsibility,validate_salary,\
                                 validate_title,check_space
