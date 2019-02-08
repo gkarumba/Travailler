@@ -60,4 +60,41 @@ class JobModels():
                     return result
                 return False
                 
-        
+    def edit_job_details(self,cat_id,location,title,company,responsibility,\
+                         category,salary):
+        """Method to edit a job details"""
+        query = f"""SELECT * FROM jobs_entity WHERE job_id = '{cat_id}';"""
+        response = db.get_one_job(query)
+        if not response:
+            return False
+        query2 = f"""UPDATE jobs_entity SET title='{title}',location='{location}',company='{company}',\
+                    responsibility='{responsibility}',category='{category}',salary='{salary}' WHERE job_id = '{cat_id}';"""
+        db.edit_job(query2)
+        get_query = f"""SELECT * FROM jobs_entity WHERE job_id='{cat_id}';"""
+        response = db.get_one_job(get_query)
+        if response:
+            return response
+        return False
+
+    def serialize(self):
+        """Method to take json data and return a python dictionary"""
+        return  {
+            'location' : self.new_location,
+            'title' : self.new_title,
+            'company' : self.new_company,
+            'responsibility' : self.new_responsibility,
+            'category' : self.new_category,
+            'salary': self.new_salary
+        }
+    
+    def get_job_by_id(self,job_id):
+        """Method to get one job by id"""
+        query = f"""SELECT * FROM jobs_entity WHERE job_id='{job_id}';"""
+        result = db.get_one_job(query)
+        if result:
+            keys = ['job_id', 'date_posted','deadline']
+            response = [result.pop(key) for key in keys]
+            print(result)
+            return result
+        return False
+#['location','title','company','responsibility','category','salary']
