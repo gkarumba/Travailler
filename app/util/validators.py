@@ -111,3 +111,28 @@ def validate_salary(salary):
     if not regnumber.match(salary):
         return False
     return True
+
+def validate_category(category):
+    """
+    Function to validate the job's category
+    """
+    # qualification = 'Diploma Certificate Degree '
+    cat = r'\b' + 'Engineering' + r'\b' 
+    cat2 = r'\b' + 'Medicine' + r'\b' 
+    cat3 = r'\b' + 'Theology' + r'\b'
+    cat4 = r'\b' + 'Business' + r'\b'
+    cat5 = r'\b' + 'Hospitality' + r'\b'
+    cat6 = r'\b' + 'Computer Science' + r'\b'
+    if not re.findall(cat,category):
+        if not re.findall(cat2,category):
+            if not re.findall(cat3,category):
+                if not re.findall(cat4,category):
+                    if not re.findall(cat5,category):
+                        if not re.findall(cat5,category):
+                            return False
+                        return True
+                    return True
+                return True
+            return True
+        return True
+    return True

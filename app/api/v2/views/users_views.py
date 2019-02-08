@@ -2,7 +2,7 @@ from flask_restplus import Resource,fields,reqparse\
                            ,Namespace
 
 from flask import abort,session,make_response,jsonify
-
+from app.util.tokens import Tokens
 from app.api.v2.models.users_models import UserModel
 from app.util.validators import validate_age,validate_education,\
                                 validate_email,validate_location,\
@@ -10,6 +10,7 @@ from app.util.validators import validate_age,validate_education,\
                                 validate_username,check_space,check_password
 from app.util.dto import AuthDto
 
+tk = Tokens()
 db = UserModel()
 api = AuthDto.api
 _user = AuthDto.user_details
@@ -95,8 +96,13 @@ class SignIn(Resource):
         if not user_exists:
             user_login = db.match_password(args['password'],args['nationalID'])
             if user_login:
+                user_id = db.get_user_id(args['nationalID'])
+                # print(user_id)
+                if not user_id:
+                    return abort(make_response(jsonify({'message':'No User Found'}),400))
+                token = tk.generate_token(user_id)
                 return make_response(jsonify({"status": 200, "data": [{'message': 'user succesfully logged in',
-                                                                    }]}), 200)
+                                                                    'token':token}]}), 200)
         return abort(make_response(jsonify({'message':'No User Found'}),400))
 
 api.add_resource(SignIn,'/user/signin')
