@@ -21,9 +21,10 @@ class JobModels():
 
     def check_job_exists(self,title):
         """Method for checking if job exists"""
-        query = f"""SELECT title FROM jobs_entity;"""
+        query = f"""SELECT * FROM jobs_entity WHERE title='{title}';"""
         result = db.get_one_job(query)
-        if result['title'] == title:
+        # print(result)
+        if result:
             return False
         return True
 
@@ -97,4 +98,12 @@ class JobModels():
             print(result)
             return result
         return False
-#['location','title','company','responsibility','category','salary']
+
+    def delete_jobs(self,job_id):
+        """Method to remove a job"""
+        check_query = f"""SELECT * FROM jobs_entity WHERE job_id = '{job_id}';"""
+        check_response = db.get_one_job(check_query)
+        if not check_response:
+            return False
+        query = f"""DELETE FROM jobs_entity where job_id = '{job_id}';"""
+        db.delete_job(query)
