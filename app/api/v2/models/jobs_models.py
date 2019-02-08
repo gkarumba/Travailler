@@ -1,5 +1,6 @@
 from app.database.database import Database
 from datetime import datetime,timedelta
+from flask import abort,session,make_response,jsonify
 db = Database()
 
 
@@ -33,3 +34,30 @@ class JobModels():
         if result:
             return result
         return False
+
+    def get_one(self,cat_id):
+        """
+        Method to retrieve one job
+        """
+        if cat_id > 6:
+            return abort(make_response(jsonify({'message':'Invalid category'}),400))
+        categories = {
+            2 : "Engineering" ,
+            1 : "Medicine" ,
+            3 : "Theology"  ,
+            4 : "Business"  ,
+            5 : "Hospitality"  ,
+            6 : "Computer science" 
+        }
+        for key,value in categories.items():
+            # print(key,value)
+            if key == cat_id:
+                # print(key,value)
+                query = f"""SELECT * FROM jobs_entity WHERE category='{value}';"""
+                result = db.get_all_jobs(query)
+                # print(result)
+                if result:
+                    return result
+                return False
+                
+        

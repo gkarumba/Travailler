@@ -1,6 +1,6 @@
 from flask_restplus import Resource,fields,reqparse\
                            ,Namespace
-from flask import abort,session,make_response,jsonify
+from flask import abort,make_response,jsonify
 
 from app.util.tokens import *
 from app.api.v2.models.jobs_models import JobModels
@@ -71,3 +71,15 @@ class PostJob(Resource):
             return  make_response(jsonify({"status": 200, "data": [{'message': 'jobs available',
                                                                     'jobs':response}]}), 200)
 api.add_resource(PostJob,'/jobs')
+
+class GetJob(Resource):
+    """Class with method to get one job"""
+    def get(self,id):
+        """Method to get one job"""
+        response = db.get_one(id)
+        if response:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'jobs available',
+                                                                    'jobs':response}]}), 200)
+        return abort(make_response(jsonify({'message':'No jobs Found'}),400))
+
+api.add_resource(GetJob,'/jobs/<int:id>')
