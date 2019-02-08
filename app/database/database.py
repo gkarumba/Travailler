@@ -16,8 +16,6 @@ class Database():
 
     def create_tables(self):
         """Method for creating tables"""
-        deadline = datetime.now() + timedelta(days=14)
-        date_posted = datetime.now()
         self.cur.execute("""CREATE TABLE IF NOT EXISTS jobs_entity(
             job_id SERIAL PRIMARY KEY,
             location varchar(420) NOT NULL,
