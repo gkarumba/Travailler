@@ -64,4 +64,10 @@ class PostJob(Resource):
             return  make_response(jsonify({"status": 201, "data": [{'message': 'job succesfully added',
                                                                     'ID':new_job['job_id']}]}), 201)
 
+    def get(self):
+        """Method to retrieve all jobs"""
+        response = db.get_all_jobs()
+        if response:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'jobs available',
+                                                                    'jobs':response}]}), 200)
 api.add_resource(PostJob,'/jobs')
