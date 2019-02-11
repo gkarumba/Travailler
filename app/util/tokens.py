@@ -77,3 +77,22 @@ def login_required(f):
         
     return decorator
 
+tk = Tokens()
+def Admin_only(f):
+    @wraps(f)
+    def decorator(*args,**kwargs):
+        token_header = request.headers.get('Authorization')
+        if not token_header:
+            raise Unauthorized('Protected Route. Add token to access it')
+        token = token_header.split(" ")[1]
+        if not token:
+            raise NotFound('Token missing. Please put a token')
+        response = tk.decode_token(token)
+        # print(response)
+        if isinstance(response,str):
+            raise Unauthorized('Invalid Token.Please Login(response)') 
+        if response != 12:
+            raise Unauthorized('Only Admin can access this endpoint')
+        return f(*args, **kwargs)
+        
+    return decorator

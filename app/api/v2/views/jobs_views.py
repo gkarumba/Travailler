@@ -22,6 +22,7 @@ class PostJob(Resource):
     """
     Class with methods to add/retrieve books
     """
+    @Admin_only
     @login_required
     @api.expect(_jobs)
     def post(self):
@@ -89,6 +90,7 @@ api.add_resource(GetJob,'/jobs/<int:id>')
 
 class EditJob(Resource):
     """Class with method to edit job"""
+    @Admin_only
     @login_required
     @api.expect(_edits)
     def put(self,id):
@@ -135,11 +137,6 @@ class EditJob(Resource):
         shared_items = {k: check_job[k] for k in check_job if k in new_job and check_job[k] == new_job[k]}
         # print(shared_items)
         if not shared_items:
-            # return abort(make_response(jsonify({'message':'No edit required'}),400))
-        # print(new_job)
-        # if new_job == check_job:
-        #     return abort(make_response(jsonify({'message':'No edit required'}),400))
-
             response = db.edit_job_details(id,title=args['new_title'],company=args['new_company'],category=args['new_category'],\
                                 responsibility=args['new_responsibility'],salary=args['new_salary'],\
                                 location=args['new_location'])
@@ -153,6 +150,7 @@ api.add_resource(EditJob,'/jobs/edit/<int:id>')
 
 class DeleteJob(Resource):
     """Class with method to delete a job"""
+    @Admin_only
     @login_required
     def delete(self,id):
         """Methods to delete a job"""
@@ -188,7 +186,7 @@ class ApplyJob(Resource):
         if apply_job:
             return  make_response(jsonify({"status": 200, "data": [{'message': 'job application succesfully',
                                                                     'appliction':apply_job}]}), 200)
-        return abort(make_response(jsonify({'message':'No application unsuccessful'}),400))
+        return abort(make_response(jsonify({'message':'Application unsuccessful'}),400))
 api.add_resource(ApplyJob,'/jobs/apply/<int:id>')
                                                                 
 class CancelJob(Resource):
@@ -220,6 +218,7 @@ api.add_resource(CancelJob,'/jobs/cancel/<int:id>')
 
 class ApproveJob(Resource):
     """Class with method to apply for a job"""
+    @Admin_only
     @login_required
     @api.expect(_apply)
     def put(self,id):
@@ -239,6 +238,20 @@ class ApproveJob(Resource):
                                                                     'application_ID':approve_job}]}), 200)
         return abort(make_response(jsonify({'message':'Job approval unsuccessful'}),400))
 api.add_resource(ApproveJob,'/jobs/approve/<int:id>')
+
+class GetUserApplications(Resource):
+    """Class with method to get user applicaton history"""
+    @login_required
+    def get(self):
+        """Method to get user applicaton history"""
+        user_id = gti.user_creds()
+        user_history = db.get_user_application_history(user_id)
+        # print(user_history)
+        if user_history:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'User application History',
+                                                                    'Applications':user_history}]}), 200)
+        return abort(make_response(jsonify({'message':'No applications by user'}),400))
+api.add_resource(GetUserApplications,'/jobs/history')
                                                                 
 
 

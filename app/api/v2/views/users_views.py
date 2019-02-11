@@ -69,8 +69,13 @@ class UserRegistration(Resource):
             new_user = UserModel.add_user(self,username=args['username'],email=args['email'],age=args['age'],
                                   occupation=args['occupation'],education=args['education'],
                                   nationalID=args['nationalID'],location=args['location'],password=args['password'])
-            return  make_response(jsonify({"status": 201, "data": [{'message': 'user succesfully created',
-                                                                    'user':new_user}]}), 201)
+            if new_user:
+                set_admin = UserModel.set_role(self,new_user)
+                if not set_admin:
+                    return make_response(jsonify({"status": 201, "data": [{'message': 'user succesfully created',
+                                                                  'role':'Not Admin','user':new_user}]}), 201)
+                return  make_response(jsonify({"status": 201, "data": [{'message': 'user succesfully created',
+                                                                 'role':'Admin','user':new_user}]}), 201)
         return abort(make_response(jsonify({'message':'User Already exists'}),400))
         
 api.add_resource(UserRegistration,'/user/signup')

@@ -111,6 +111,12 @@ class JobModels():
     def apply_job(self,job_id,status,user_id):
         """Method to apply a job"""
         if status == 'Apply':
+            status == 'Applied'
+            check_query = f"""SELECT status FROM application_entity WHERE job_id = '{job_id}' AND  user_id='{user_id}';"""
+            result = db.get_one_job(check_query)
+            # print(response)
+            if result['status'] == 'Approved':
+                return False
             check_query = f"""SELECT * FROM jobs_entity WHERE job_id = '{job_id}';"""
             check_response = db.get_one_job(check_query)
             # print(check_response)
@@ -137,6 +143,12 @@ class JobModels():
     def cancel_job(self,job_id,status,user_id):
         """Method to cancel application"""
         if status == 'Cancel':
+            status = 'Cancelled'
+            check_query = f"""SELECT status FROM application_entity WHERE job_id = '{job_id}' AND  user_id='{user_id}';"""
+            result = db.get_one_job(check_query)
+            # print(response)
+            if result['status'] == 'Approved':
+                return False
             query2 = f"""UPDATE application_entity SET status='{status}' WHERE job_id = '{job_id}' AND  user_id='{user_id}';"""
             db.edit_job(query2)
             get_query = f"""SELECT application_id FROM application_entity WHERE job_id = '{job_id}' AND  user_id='{user_id}';"""
@@ -150,9 +162,11 @@ class JobModels():
     def approve_job(self,application_id,status):
         """Method to cancel application"""
         if status == 'Approve':
-            check_query = f"""SELECT * FROM application_entity WHERE application_id = '{application_id}';"""
+            status = 'Approved'
+            check_query = f"""SELECT status FROM application_entity WHERE application_id = '{application_id}';"""
             result = db.get_one_job(check_query)
-            if not result:
+            print(result['status'])
+            if result['status'] == 'Cancelled' or result['status'] == 'Approved':
                 return False
             query2 = f"""UPDATE application_entity SET status='{status}' WHERE application_id = '{application_id}';"""
             db.edit_job(query2)
@@ -162,4 +176,12 @@ class JobModels():
             if response:
                 return response
             return False
+        return False
+
+    def get_user_application_history(self,user_id):
+        """Method to get a user application history"""
+        get_query = f"""SELECT * FROM application_entity WHERE user_id = '{user_id}';"""
+        response = db.get_all_jobs(get_query)
+        if response:
+            return response
         return False
