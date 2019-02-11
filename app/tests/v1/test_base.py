@@ -77,12 +77,12 @@ class BaseTest(unittest.TestCase):
         self.register_password = {
             "username": "string",
             "email": "string@email.com",
-            "password": "strin98",
+            "password": "su",
             "age": 20,
             "location": "string",
             "occupation": "Employed",
             "education": "Degree",
-            "NationalID": 12345679
+            "NationalID": 12345676
         }
         self.register_NationalID = {
             "username": "string",

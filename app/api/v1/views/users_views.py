@@ -47,6 +47,8 @@ class Registration(Resource):
             return abort(make_response(jsonify({'message':'Invalid Email'}),400))
         if not validate_age(args['age']):
             return abort(make_response(jsonify({'message':'Invalid age'}),400))
+        if not check_password(args['password']):
+            return abort(make_response(jsonify({'message':'Invalid Password,atleast 8 characters'}),400))
         if not validate_occupation(args['occupation']):
             return abort(make_response(jsonify({'message':'Invalid occupation'}),400))
         if not validate_education(args['education']):

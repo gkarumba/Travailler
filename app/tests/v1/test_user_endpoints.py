@@ -1,7 +1,7 @@
 import unittest
 import json
 
-from app.api.users.v1.models import UserModels
+from app.api.v1.models.users_models import UserModels
 from app.tests.v1.test_base import BaseTest
 
 class TestEndpoints(BaseTest):
