@@ -61,3 +61,4 @@ class JobsDto():
         'new_location':fields.String(required=True,description='jobs location'),
         'new_salary':fields.String(required=True,description='jobs salary')
     })
+
