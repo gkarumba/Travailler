@@ -17,6 +17,7 @@ class Database():
     def create_tables(self):
         """Method for creating tables"""
         deadline = datetime.now() + timedelta(days=14)
+        date_posted = datetime.now()
         self.cur.execute("""CREATE TABLE IF NOT EXISTS jobs_entity(
             job_id SERIAL PRIMARY KEY,
             location varchar(420) NOT NULL,
@@ -24,7 +25,9 @@ class Database():
             company  varchar(420) NOT NULL,
             responsibility  varchar(420) NOT NULL,
             category varchar(420) NOT NULL,
-            salary int NOT NULL
+            salary int NOT NULL,
+            deadline varchar(420),
+            date_posted varchar(420)
         );""",
         """ CREATE TABLE IF NOT EXISTS user_entity(
             user_id SERIAL PRIMARY KEY,
@@ -50,7 +53,7 @@ class Database():
     
     def add_job(self,query_data,tuple_data):
         """Method to add job"""
-        self.cur.execute(query_string,tuple_data)
+        self.cur.execute(query_data,tuple_data)
         self.conn.commit()
 
     def add_user(self,query_data,tuple_data):
