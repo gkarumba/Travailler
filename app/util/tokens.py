@@ -8,6 +8,7 @@ from app.api.v2.models.users_models import UserModel
 
 db = UserModel()
 key = os.getenv('SECRET_KEY')
+
 class Tokens():
     """Class with methods to generate tokens and decode tokens"""
     def generate_token(self,user_id):
@@ -38,6 +39,22 @@ class Tokens():
             raise Unauthorized('Invalid Token(jwt),Please log in')
 
         return payload['id']
+
+tk = Tokens()  
+class GetUserId():
+    """Class with method to get user_id"""
+    def user_creds(self):
+        """Method to get user_id from token"""
+        token_header = request.headers.get('Authorization')
+        if token_header:
+            token = token_header.split(" ")[1]
+        else:
+            token = ''
+        if token:
+            response = tk.decode_token(token)
+            if isinstance(response, str):
+                raise Unauthorized('Invalid Token.Please Login(user_id)') 
+            return response
         
 tk = Tokens()
 def login_required(f):

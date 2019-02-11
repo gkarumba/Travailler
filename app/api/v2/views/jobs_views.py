@@ -7,14 +7,16 @@ from app.api.v2.models.jobs_models import JobModels
 from app.util.validators import validate_title,validate_responsibility,\
                                 validate_company,validate_location,\
                                 validate_category,validate_salary,\
-                                check_space
+                                check_space,validate_status
 from app.util.dto import JobsDto
 
 api = JobsDto.api
 _jobs = JobsDto.jobs
 _edits = JobsDto.job_edits
+_apply = JobsDto.job_apply
 tk = Tokens()
 db = JobModels()
+gti = GetUserId()
 
 class PostJob(Resource):
     """
@@ -63,7 +65,7 @@ class PostJob(Resource):
         if new_job:    
             return  make_response(jsonify({"status": 201, "data": [{'message': 'job succesfully added',
                                                                     'ID':new_job['job_id']}]}), 201)
-
+    @login_required
     def get(self):
         """Method to retrieve all jobs"""
         response = db.get_all_jobs()
@@ -87,6 +89,7 @@ api.add_resource(GetJob,'/jobs/<int:id>')
 
 class EditJob(Resource):
     """Class with method to edit job"""
+    @login_required
     @api.expect(_edits)
     def put(self,id):
         """Method to edit job"""
@@ -150,6 +153,7 @@ api.add_resource(EditJob,'/jobs/edit/<int:id>')
 
 class DeleteJob(Resource):
     """Class with method to delete a job"""
+    @login_required
     def delete(self,id):
         """Methods to delete a job"""
         response = db.delete_jobs(id)
@@ -159,3 +163,34 @@ class DeleteJob(Resource):
                                                                         }]}), 200)
         return abort(make_response(jsonify({'message':'No job found'}),400))
 api.add_resource(DeleteJob,'/jobs/delete/<int:id>')
+
+class ApplyJob(Resource):
+    """Class with method to apply for a job"""
+    @login_required
+    @api.expect(_apply)
+    def post(self,id):
+        """Method to apply for a job"""
+        user_id = gti.user_creds()
+        # print(user_id)
+        parser = reqparse.RequestParser()
+        parser.add_argument('status',type=str,\
+                            required=True,help='status field cannot be empty')
+        args = parser.parse_args()
+
+        if not validate_status(args['status']):
+            return abort(make_response(jsonify({'message':'Invalid status'}),400))
+
+        check_job = db.get_job_by_id(id)
+        if not check_job:
+            return abort(make_response(jsonify({'message':'No job found'}),400))
+        apply_job = db.apply_job(id,args['status'],user_id)
+        # print(apply_job)
+        if apply_job:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'job application succesfully',
+                                                                    'appliction':apply_job}]}), 200)
+        return abort(make_response(jsonify({'message':'No application unsuccessful'}),400))
+api.add_resource(ApplyJob,'/jobs/apply/<int:id>')
+                                                                
+
+
+

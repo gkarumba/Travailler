@@ -62,3 +62,6 @@ class JobsDto():
         'new_salary':fields.String(required=True,description='jobs salary')
     })
 
+    job_apply = api.model('Apply',{
+        'status':fields.String(required=True,description='application status')
+    })
