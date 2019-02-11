@@ -146,3 +146,20 @@ class JobModels():
                 return response
             return False
         return False
+    
+    def approve_job(self,application_id,status):
+        """Method to cancel application"""
+        if status == 'Approve':
+            check_query = f"""SELECT * FROM application_entity WHERE application_id = '{application_id}';"""
+            result = db.get_one_job(check_query)
+            if not result:
+                return False
+            query2 = f"""UPDATE application_entity SET status='{status}' WHERE application_id = '{application_id}';"""
+            db.edit_job(query2)
+            get_query = f"""SELECT application_id FROM application_entity WHERE application_id = '{application_id}';"""
+            response = db.get_one_job(get_query)
+            # print(response)
+            if response:
+                return response
+            return False
+        return False

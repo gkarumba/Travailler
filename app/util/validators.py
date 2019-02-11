@@ -146,7 +146,7 @@ def validate_status(status_data):
     status3 = r'\b' + 'Approve' + r'\b' 
     if not re.findall(status,status_data):
         if not re.findall(status2,status_data):
-            if not re.findall(status2,status_data):
+            if not re.findall(status3,status_data):
                 return False
             return True
         return True
