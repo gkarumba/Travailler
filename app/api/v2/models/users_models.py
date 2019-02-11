@@ -28,6 +28,14 @@ class UserModel():
         if result:
             return False
         return True
+    
+    def check_user_id(self,user_id):
+        """Method to check if a user_id exists"""
+        query = f"""SELECT user_id FROM user_entity WHERE user_id ={user_id};"""
+        result = db.get_one_user(query)
+        if result:
+            return True
+        return False
 
     def match_password(self,password,nationalID):
        """Method to match passwords"""
