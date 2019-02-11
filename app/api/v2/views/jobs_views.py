@@ -217,6 +217,28 @@ class CancelJob(Resource):
                                                                     'application_ID':cancel_job}]}), 200)
         return abort(make_response(jsonify({'message':'Cancel unsuccessful'}),400))
 api.add_resource(CancelJob,'/jobs/cancel/<int:id>')
+
+class ApproveJob(Resource):
+    """Class with method to apply for a job"""
+    @login_required
+    @api.expect(_apply)
+    def put(self,id):
+        """Method to apply for a job"""
+        parser = reqparse.RequestParser()
+        parser.add_argument('status',type=str,\
+                            required=True,help='status field cannot be empty')
+        args = parser.parse_args()
+
+        if not validate_status(args['status']):
+            return abort(make_response(jsonify({'message':'Invalid status'}),400))
+
+        approve_job = db.approve_job(id,args['status'])
+        # print(approve_job)
+        if approve_job:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'job application approved',
+                                                                    'application_ID':approve_job}]}), 200)
+        return abort(make_response(jsonify({'message':'Job approval unsuccessful'}),400))
+api.add_resource(ApproveJob,'/jobs/approve/<int:id>')
                                                                 
 
 
