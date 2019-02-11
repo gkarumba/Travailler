@@ -9,6 +9,7 @@ class UserModel():
     def add_user(self,email,password,username,occupation,age,\
                  location,education,nationalID):
         """Method of adding a user"""
+        Admin = 'True'
         hash_password = generate_password_hash(password)
         # db.create_tables()
         # db.create_tables()
@@ -29,6 +30,21 @@ class UserModel():
             return False
         return True
     
+    def set_role(self,user_id):
+        """
+        Method for creating Admin role
+        """
+        role = 'Admin'
+        ID = 12
+        query = """SELECT user_id FROM user_entity WHERE user_id = 12;"""
+        result  = db.get_one_user(query)
+        if result:
+            query2 = """UPDATE user_entity SET admin = '{}' WHERE user_id = '{}'""".format(role,ID)
+            db.edit_job(query2)
+            query3 = """ SELECT * FROM user_entity WHERE user_id = '{}'""".format(ID)
+            response = db.get_one_user(query3)
+            return response
+
     def check_user_id(self,user_id):
         """Method to check if a user_id exists"""
         query = f"""SELECT user_id FROM user_entity WHERE user_id ={user_id};"""
