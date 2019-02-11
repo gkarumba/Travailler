@@ -70,6 +70,7 @@ class PostJob(Resource):
         if response:
             return  make_response(jsonify({"status": 200, "data": [{'message': 'jobs available',
                                                                     'jobs':response}]}), 200)
+        return abort(make_response(jsonify({'message':'No jobs Found'}),400))
 api.add_resource(PostJob,'/jobs')
 
 class GetJob(Resource):
@@ -146,3 +147,15 @@ class EditJob(Resource):
         return abort(make_response(jsonify({'message':'No editing required'}),400))
 
 api.add_resource(EditJob,'/jobs/edit/<int:id>')
+
+class DeleteJob(Resource):
+    """Class with method to delete a job"""
+    def delete(self,id):
+        """Methods to delete a job"""
+        response = db.delete_jobs(id)
+        # print(response)
+        if response == None:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'job deleted succesfully'
+                                                                        }]}), 200)
+        return abort(make_response(jsonify({'message':'No job found'}),400))
+api.add_resource(DeleteJob,'/jobs/delete/<int:id>')
