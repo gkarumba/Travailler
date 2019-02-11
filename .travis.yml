@@ -11,17 +11,16 @@ install:
 services:
   - postgresql
 
-addons:
-  postgresql: "10.6"
-
 before_script:
-  - psql -c "CREATE DATABASE jobs;" -U postgres
-  - psql -c "CREATE DATABASE test_jobs;" -U postgres
-  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres;" -U postgres
+- psql -c "create user postgres WITH PASSWORD '123456';" -U postgres
+- psql -c "create database jobs;" -U postgres
 
-# command to run tests
 script:
+  - export FLASK_ENV=dev
+  - export DATABASE_URL="dbname='jobs'host='localhost'port='5432'user='postgres'password='123456'"
+  - export SECRET_KEY="nova_catharge_hasdrubal-260BC-200BCE"
   - pytest
+# command to run tests
 
 branches:
   only:
