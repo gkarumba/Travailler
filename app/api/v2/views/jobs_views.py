@@ -191,6 +191,33 @@ class ApplyJob(Resource):
         return abort(make_response(jsonify({'message':'No application unsuccessful'}),400))
 api.add_resource(ApplyJob,'/jobs/apply/<int:id>')
                                                                 
+class CancelJob(Resource):
+    """Class with method to apply for a job"""
+    @login_required
+    @api.expect(_apply)
+    def put(self,id):
+        """Method to apply for a job"""
+        user_id = gti.user_creds()
+        # print(user_id)
+        parser = reqparse.RequestParser()
+        parser.add_argument('status',type=str,\
+                            required=True,help='status field cannot be empty')
+        args = parser.parse_args()
+
+        if not validate_status(args['status']):
+            return abort(make_response(jsonify({'message':'Invalid status'}),400))
+
+        check_job = db.get_job_by_id(id)
+        if not check_job:
+            return abort(make_response(jsonify({'message':'No job found'}),400))
+        cancel_job = db.cancel_job(id,args['status'],user_id)
+        # print(cancel_job)
+        if cancel_job:
+            return  make_response(jsonify({"status": 200, "data": [{'message': 'job application cancelled',
+                                                                    'application_ID':cancel_job}]}), 200)
+        return abort(make_response(jsonify({'message':'Cancel unsuccessful'}),400))
+api.add_resource(CancelJob,'/jobs/cancel/<int:id>')
+                                                                
 
 
 
