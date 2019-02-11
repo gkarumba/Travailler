@@ -1,7 +1,7 @@
 import unittest
 import json
 
-from app.api.jobs.v1.models import JobsModel
+from app.api.v1.models.jobs_models import JobsModel
 from app.tests.v1.test_base import BaseTest
 
 class TestEndpoints(BaseTest):

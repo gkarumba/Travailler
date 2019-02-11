@@ -14,7 +14,7 @@ class DevelopmentConfig(Config):
     """
     Development stage configurations
     """
-    DEBUG = False
+    DEBUG = True
     DB_URL = os.getenv('DATABASE_URL')
 
 class TestingConfig(Config):
