@@ -89,11 +89,11 @@ class Database():
         self.cur.execute(query_data)
         self.conn.commit()
 
-    def apply_job(self,query_data):
+    def apply_job(self,query_data,tuple_data):
         """Method to apply for a job"""
-        self.cur.execute(query_data)
+        self.cur.execute(query_data,tuple_data)
         self.conn.commit()
-
+        
     def delete_job(self,query_data):
         """Method to remove a job"""
         self.cur.execute(query_data)

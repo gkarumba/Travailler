@@ -136,3 +136,18 @@ def validate_category(category):
             return True
         return True
     return True
+
+def validate_status(status_data):
+    """
+    Function to validate the status input
+    """
+    status = r'\b' + 'Apply' + r'\b' 
+    status2 = r'\b' + 'Cancel' + r'\b'
+    status3 = r'\b' + 'Approve' + r'\b' 
+    if not re.findall(status,status_data):
+        if not re.findall(status2,status_data):
+            if not re.findall(status2,status_data):
+                return False
+            return True
+        return True
+    return True

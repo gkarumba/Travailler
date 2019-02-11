@@ -95,7 +95,7 @@ class JobModels():
         if result:
             keys = ['job_id', 'date_posted','deadline']
             response = [result.pop(key) for key in keys]
-            print(result)
+            # print(result)
             return result
         return False
 
@@ -107,3 +107,19 @@ class JobModels():
             return False
         query = f"""DELETE FROM jobs_entity where job_id = '{job_id}';"""
         db.delete_job(query)
+    
+    def apply_job(self,job_id,status,user_id):
+        """Method to apply a job"""
+        check_query = f"""SELECT * FROM jobs_entity WHERE job_id = '{job_id}';"""
+        check_response = db.get_one_job(check_query)
+        # print(check_response)
+        if not check_response:
+            return False
+        # if status == 'Apply':
+        query = """INSERT INTO application_entity(job_id,status,user_id) VALUES (%s,%s,%s);"""
+        tuple_data = (job_id,status,user_id)
+        response = db.apply_job(query,tuple_data)
+        query2 = """SELECT application_id FROM application_entity WHERE application_id = (select max(application_id) from application_entity);"""
+        result = db.get_one_job(query2)
+        return result
+        
