@@ -6,10 +6,25 @@ python:
 # command to install dependencies
 install:
   -  pip install -r requirements.txt
+  -  pip install coveralls
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "10.6"
+
+before_script:
+  - psql -c "CREATE DATABASE jobs;" -U postgres
+  - psql -c "CREATE DATABASE test_jobs;" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres;" -U postgres
 
 # command to run tests
 script:
   - pytest
-  
+
+branches:
+  only:
+    - develop
 after_success:
   - coveralls
