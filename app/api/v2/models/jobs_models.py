@@ -110,16 +110,39 @@ class JobModels():
     
     def apply_job(self,job_id,status,user_id):
         """Method to apply a job"""
-        check_query = f"""SELECT * FROM jobs_entity WHERE job_id = '{job_id}';"""
-        check_response = db.get_one_job(check_query)
-        # print(check_response)
-        if not check_response:
+        if status == 'Apply':
+            check_query = f"""SELECT * FROM jobs_entity WHERE job_id = '{job_id}';"""
+            check_response = db.get_one_job(check_query)
+            # print(check_response)
+            if not check_response:
+                return False
+            # if status == 'Apply':
+            query = """INSERT INTO application_entity(job_id,status,user_id) VALUES (%s,%s,%s);"""
+            tuple_data = (job_id,status,user_id)
+            response = db.apply_job(query,tuple_data)
+            query2 = """SELECT application_id FROM application_entity WHERE application_id = (select max(application_id) from application_entity);"""
+            result = db.get_one_job(query2)
+            return result
+        return False
+    
+    # def get_user_id(self,application_id):
+    #     """Method of getting user_id from application"""
+    #     check_query = f"""SELECT user_id FROM application_entity WHERE application_id = '{application_id}';"""
+    #     check_response = db.get_one_job(check_query)
+    #     # print(check_response)
+    #     if not check_response:
+    #         return False
+    #     return check_response
+    
+    def cancel_job(self,job_id,status,user_id):
+        """Method to cancel application"""
+        if status == 'Cancel':
+            query2 = f"""UPDATE application_entity SET status='{status}' WHERE job_id = '{job_id}' AND  user_id='{user_id}';"""
+            db.edit_job(query2)
+            get_query = f"""SELECT application_id FROM application_entity WHERE job_id = '{job_id}' AND  user_id='{user_id}';"""
+            response = db.get_one_job(get_query)
+            # print(response)
+            if response:
+                return response
             return False
-        # if status == 'Apply':
-        query = """INSERT INTO application_entity(job_id,status,user_id) VALUES (%s,%s,%s);"""
-        tuple_data = (job_id,status,user_id)
-        response = db.apply_job(query,tuple_data)
-        query2 = """SELECT application_id FROM application_entity WHERE application_id = (select max(application_id) from application_entity);"""
-        result = db.get_one_job(query2)
-        return result
-        
+        return False
