@@ -98,7 +98,7 @@ class Database():
         """Method to remove a job"""
         self.cur.execute(query_data)
         self.conn.commit()
-
+    
     def drop_table(self, table_name):
         drop = f"DROP TABLE {table_name};"
         self.cursor.execute(drop)
