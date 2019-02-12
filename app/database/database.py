@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from instance.config import config_by_name
 
 environment = os.getenv('FLASK_ENV')
-database_url = config_by_name[environment].DB_URL
+database_url = "dbname='jobs'host='localhost'port='5432'user='postgres'password='123456'"
 
 class Database():
     """Class with methods to handle the database"""
