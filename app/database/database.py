@@ -99,8 +99,8 @@ class Database():
         self.cur.execute(query_data)
         self.conn.commit()
 
-    def __del__(self):
-        self.conn.close()
+    # def __del__(self):
+    #     self.conn.close()
 
     def drop_table(self, table_name):
         drop = f"DROP TABLE {table_name};"
