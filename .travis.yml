@@ -21,7 +21,10 @@ before_script:
 
 # command to run tests
 script:
-  - pytest
+  - export FLASK_ENV="dev"
+  - export DATABASE_URL="dbname='jobs'host='localhost'port='5432'user='postgres'password='123456'"
+  - export SECRET_KEY="nova_catharge_hasdrubal-260BC-200BCE"
+  - nosetests --with-coverage --cover-package=app 
 
 branches:
   only:

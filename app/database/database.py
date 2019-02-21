@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from instance.config import config_by_name
 
 environment = os.getenv('FLASK_ENV')
-database_url = "postgres://takxlevmflfwup:2ea8cc1c7a18bace0d7880325242649ff070edd7315f2fbd43dc25f29e01e873@ec2-54-227-246-152.compute-1.amazonaws.com:5432/d5tpoag5lng45u"
+database_url = config_by_name[env].DB_URL
 
 class Database():
     """Class with methods to handle the database"""
