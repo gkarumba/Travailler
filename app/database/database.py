@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from instance.config import config_by_name
 
 environment = os.getenv('FLASK_ENV')
-database_url = config_by_name[environment].DB_URL
+database_url = config_by_name[env].DB_URL
 
 class Database():
     """Class with methods to handle the database"""
@@ -98,10 +98,7 @@ class Database():
         """Method to remove a job"""
         self.cur.execute(query_data)
         self.conn.commit()
-
-    def __del__(self):
-        self.conn.close()
-
+    
     def drop_table(self, table_name):
         drop = f"DROP TABLE {table_name};"
         self.cursor.execute(drop)
